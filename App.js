@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Platform } from 'react-native';
 import Focus from './src/features/Focus/Focus';
+import { FocusHistory } from './src/features/Focus/FocusHistory';
 import { colors } from './src/utils/colors';
 import { Timer } from './src/features/timer/Timer';
 import { spacing } from './src/utils/sizes';
@@ -14,8 +15,12 @@ export default function App() {
   const [focusSubject, setFocusSubject] = useState(null)
   const [focusHistory, setFocusHistory] = useState([])
 
- const addFocusHistorySubjectWithState = (subject, status) => {
+  const addFocusHistorySubjectWithState = (subject, status) => {
     setFocusHistory([...focusHistory, { subject, status }])
+  }
+
+  const onClear = () => {
+    //things to do
   }
 
   console.log(focusHistory)
@@ -33,7 +38,12 @@ export default function App() {
           }}
 
         />)
-        : (<Focus addSubject={setFocusSubject}/>)}
+        : (
+          <>
+            <Focus addSubject={setFocusSubject} />
+            <FocusHistory focusHistory={focusHistory} onClear={() => {onClear}}/>
+          </>
+        )}
     </View>
   );
 }
