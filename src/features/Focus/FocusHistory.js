@@ -13,20 +13,24 @@ const HistoryItem = ({item, index}) => {
 }
 
 
-export const FocusHistory = ({ focusHistory, onClear }) => {
+export const FocusHistory = ({focusHistory, onClear }) => {
   const clearHistory = () => {
-    onClear
+    onClear()
   }
   return (
     <>
       <SafeAreaView style={{ flex: 1 }}>
-        <Text style={styles.title}>Things we've focused on</Text>
-        {!!focusHistory.length &&
+        {!!focusHistory.length && (
+          <>
+          <Text style={styles.title}>Things we've focused on</Text>
           <FlatList style={{ flex: 1 }} contentContainerStyle={{flex: 1, alignItems: "center"}} 
           data={focusHistory}
-          renderItem={HistoryItem}
-          />
-        }
+          renderItem={HistoryItem}/>
+          <View style={styles.clearContainer}>
+        <RoundedButton size={75} title="Clear" onPress={() => onClear()}/>
+      </View>
+      </>
+        )}
       </SafeAreaView>
     </>
   )

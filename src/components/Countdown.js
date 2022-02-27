@@ -30,6 +30,12 @@ export const Countdown = ({
     setMilliseconds(minutesToMillis(minutes))
   }, [minutes])
   
+  useEffect(() => {
+    onProgress(milliseconds / minutesToMillis(minutes))
+    if(milliseconds === 0) {
+      onEnd();
+    }
+  },[milliseconds])
 
   useEffect(() => {
     if (isPaused) {
@@ -37,12 +43,10 @@ export const Countdown = ({
       return;
     }
     interval.current = setInterval(countDown, 1000);
-    onProgress(milliseconds / minutesToMillis(minutes))
-    if(milliseconds === 0) {
-      onEnd();
-    }
     return () => clearInterval(interval.current)
-  }, [isPaused, milliseconds])
+  }, [isPaused])
+
+
 
   const minute = Math.floor(milliseconds / 1000 / 60) % 60;
   const seconds = Math.floor(milliseconds / 1000) % 60;
